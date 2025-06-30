@@ -1,6 +1,21 @@
 import React from 'react';
 import './index.css';
 
+interface Member {
+  id: string;
+  name: string;
+}
+
+interface Props {
+  isConnected: boolean;
+  members: Member[];
+  chatRows: React.ReactNode[];
+  onPublicMessage: () => void;
+  onPrivateMessage: (to: string) => void;
+  onConnect: () => void;
+  onDisconnect: () => void;
+}
+
 export const ChatClient = ({
   isConnected,
   members,
@@ -9,47 +24,45 @@ export const ChatClient = ({
   onPrivateMessage,
   onConnect,
   onDisconnect,
-}: any) => {
-
+}: Props) => {
   return (
-    <div className="app-container">
-      {/* Sidebar */}
+    <div className="app">
       <div className="sidebar">
         <h2>LiveConnect</h2>
-        {members.map((name: string) => (
+        {members.map((m) => (
           <div
-            key={name}
+            key={m.id}
             className="member"
-            onClick={() => onPrivateMessage(name)}
+            onClick={() => onPrivateMessage(m.id)}
           >
-            {name}
+            {m.name}
           </div>
         ))}
       </div>
 
-      {/* Chat Section */}
-      <div className="chat-section">
-        <div className="header">
+      <div className="chat">
+        <div className="chat-header">
           <h3>Chat Room</h3>
-          <div className={`status-dot ${isConnected ? 'online' : 'offline'}`} />
+          <div>{isConnected ? '🟢 Online' : '🔴 Offline'}</div>
         </div>
 
         <div className="chat-display">
-          {chatRows.map((row: any, idx: number) => (
-            <div key={idx}>{row}</div>
+          {chatRows.map((row, idx) => (
+            <span key={idx}>{row}</span>
           ))}
         </div>
 
-        <div className="button-row">
-          <button onClick={onPublicMessage} disabled={!isConnected}>
-            Send Public
-          </button>
-          {!isConnected ? (
+        <div className="buttons">
+          {!isConnected && (
             <button onClick={onConnect}>Connect</button>
-          ) : (
-            <button className="disconnect-button" onClick={onDisconnect}>
-              Disconnect
-            </button>
+          )}
+          {isConnected && (
+            <>
+              <button onClick={onPublicMessage}>Send Public</button>
+              <button className="disconnect" onClick={onDisconnect}>
+                Disconnect
+              </button>
+            </>
           )}
         </div>
       </div>
