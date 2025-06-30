@@ -22,27 +22,25 @@ export const ChatClient = (props: Props) => {
   return (
     <div
       style={{
-        position: 'fixed',
+        position: 'absolute', // ✅ Fixed to absolute like version 1
         width: '100%',
         height: '100%',
         backgroundColor: '#f4ede3',
         display: 'flex',
+        alignItems: 'center',
       }}
     >
       <CssBaseline />
       <Container maxWidth="lg" style={{ height: '90%' }}>
         <Grid container style={{ height: '100%' }}>
-          {/* Sidebar */}
           <Grid
             item
-            xs={3} // Wider Sidebar
+            xs={2}
             style={{
-              backgroundColor: '#4B0082', // 🎨 Changed sidebar color to Indigo
+              backgroundColor: '#3e103f', // ✅ Keep previous sidebar color (original one)
               color: 'white',
-              paddingTop: 10,
             }}
           >
-            <h2 style={{ paddingLeft: 10 }}>LiveConnect</h2>
             <List component="nav">
               {props.members.map((item) => (
                 <ListItem
@@ -50,73 +48,79 @@ export const ChatClient = (props: Props) => {
                   onClick={() => props.onPrivateMessage(item)}
                   button
                 >
-                  <ListItemText primary={item} />
+                  <ListItemText style={{ fontWeight: 800 }} primary={item} />
                 </ListItem>
               ))}
             </List>
           </Grid>
 
-          {/* Chat Area */}
           <Grid
+            style={{ position: 'relative' }}
             item
-            xs={9}
-            style={{ position: 'relative', display: 'flex', flexDirection: 'column' }}
+            container
+            direction="column"
+            xs={10}
           >
-            <Paper style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
-              <div
-                style={{
-                  flex: 1,
-                  overflowY: 'auto',
-                  padding: '20px 30px',
-                }}
-              >
-                <ul style={{ listStyleType: 'none', padding: 0, margin: 0 }}>
-                  {props.chatRows.map((item, i) => (
-                    <li key={i} style={{ marginBottom: 8 }}>
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-              <div style={{ padding: 10 }}>
-                {props.isConnected && (
-                  <>
+            <Paper style={{ flex: 1 }}>
+              <Grid item container style={{ height: '100%' }} direction="column">
+                <Grid item container style={{ flex: 1 }}>
+                  <ul
+                    style={{
+                      paddingTop: 20,
+                      paddingLeft: 44,
+                      listStyleType: 'none',
+                    }}
+                  >
+                    {props.chatRows.map((item, i) => (
+                      <li key={i} style={{ paddingBottom: 9 }}>
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
+                </Grid>
+                <Grid item style={{ margin: 10 }}>
+                  {props.isConnected && (
                     <Button
                       style={{ marginRight: 7 }}
                       variant="outlined"
                       size="small"
+                      disableElevation
                       onClick={props.onPublicMessage}
                     >
-                      Send Public
+                      Send Public Message
                     </Button>
+                  )}
+                  {props.isConnected && (
                     <Button
                       variant="outlined"
                       size="small"
+                      disableElevation
                       onClick={props.onDisconnect}
                     >
                       Disconnect
                     </Button>
-                  </>
-                )}
-                {!props.isConnected && (
-                  <Button
-                    variant="outlined"
-                    size="small"
-                    onClick={props.onConnect}
-                  >
-                    Connect
-                  </Button>
-                )}
-              </div>
+                  )}
+                  {!props.isConnected && (
+                    <Button
+                      variant="outlined"
+                      size="small"
+                      disableElevation
+                      onClick={props.onConnect}
+                    >
+                      Connect
+                    </Button>
+                  )}
+                </Grid>
+              </Grid>
               <div
                 style={{
                   position: 'absolute',
-                  right: 10,
-                  top: 10,
+                  right: 9,
+                  top: 8,
                   width: 12,
                   height: 12,
                   backgroundColor: props.isConnected ? '#00da00' : '#e2e2e2',
-                  borderRadius: '50%',
+                  borderRadius: 50,
                 }}
               />
             </Paper>
