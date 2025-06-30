@@ -5,113 +5,20 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }
 
-.app-container {
-  display: flex;
-  width: 90vw;
-  height: 90vh;
-  background: white;
-  border-radius: 12px;
-  overflow: hidden;
-}
-
-.sidebar {
-  width: 250px;
-  background: #112d4e;
-  color: white;
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-}
-
-.sidebar h2 {
-  margin-bottom: 20px;
-}
-
-.member {
-  background: #00c3ff;
-  color: black;
-  padding: 10px 14px;
-  margin-bottom: 10px;
-  border-radius: 8px;
-  cursor: pointer;
-  font-weight: 600;
-}
-
-.member:hover {
-  background: #00aacc;
-}
-
-.chat-section {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  padding: 20px;
-}
-
-.chat-display {
-  flex: 1;
-  background: #f5f5f5;
-  padding: 14px;
-  margin-bottom: 12px;
-  overflow-y: auto;
-  border-radius: 8px;
-}
-
-.chat-display span {
-  display: block;
-  margin-bottom: 8px;
-}
-
-.button-row {
-  display: flex;
-  gap: 10px;
-}
-
-button {
-  padding: 10px 18px;
-  border: none;
-  background: #00a8ff;
-  color: white;
-  border-radius: 6px;
-  cursor: pointer;
-  font-weight: 600;
-}
-
-button:hover {
-  background: #007fcc;
-}
-
-.disconnect-button {
-  background: crimson;
-}
-
-.disconnect-button:hover {
-  background: darkred;
-}
-
-/* Mobile Responsive */
-@media (max-width: 768px) {
-  .app-container {
-    flex-direction: column;
-    height: 95vh;
+@media (max-width: 600px) {
+  .MuiContainer-root {
+    padding-left: 5px !important;
+    padding-right: 5px !important;
   }
 
-  .sidebar {
-    width: 100%;
-    flex-direction: row;
-    overflow-x: auto;
-    padding: 12px;
-  }
-
-  .member {
-    margin-right: 10px;
-    margin-bottom: 0;
+  .MuiPaper-root {
+    overflow-y: auto;
   }
 }
+
