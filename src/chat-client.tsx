@@ -7,6 +7,7 @@ import Grid from '@material-ui/core/Grid';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import Paper from '@material-ui/core/Paper';
+import logo from './logo.svg';
 
 interface Props {
   isConnected: boolean;
@@ -22,7 +23,7 @@ export const ChatClient = (props: Props) => {
   return (
     <div
       style={{
-        position: 'absolute', // ✅ Fixed to absolute like version 1
+        position: 'absolute',
         width: '100%',
         height: '100%',
         backgroundColor: '#f4ede3',
@@ -33,15 +34,31 @@ export const ChatClient = (props: Props) => {
       <CssBaseline />
       <Container maxWidth="lg" style={{ height: '90%' }}>
         <Grid container style={{ height: '100%' }}>
+          {/* Sidebar */}
           <Grid
             item
             xs={2}
             style={{
-              backgroundColor: '#3e103f', // ✅ Keep previous sidebar color (original one)
+              backgroundColor: '#4B0082', // Darker purple
               color: 'white',
+              display: 'flex',
+              flexDirection: 'column',
             }}
           >
-            <List component="nav">
+            {/* Logo & Title */}
+            <div
+              style={{
+                padding: '16px',
+                borderBottom: '1px solid rgba(255, 255, 255, 0.4)',
+                textAlign: 'center',
+              }}
+            >
+              <img src={logo} alt="Logo" style={{ width: 50, marginBottom: 8 }} />
+              <div style={{ fontSize: '20px', fontWeight: 'bold' }}>LiveConnect</div>
+            </div>
+
+            {/* Members List */}
+            <List component="nav" style={{ flexGrow: 1, overflowY: 'auto' }}>
               {props.members.map((item) => (
                 <ListItem
                   key={item}
@@ -54,6 +71,7 @@ export const ChatClient = (props: Props) => {
             </List>
           </Grid>
 
+          {/* Chat Section */}
           <Grid
             style={{ position: 'relative' }}
             item
