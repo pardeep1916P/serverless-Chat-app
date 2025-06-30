@@ -6,35 +6,42 @@ const URL = 'wss://6wlyb2jxxi.execute-api.ap-south-2.amazonaws.com/production/';
 const App = () => {
   const socket = useRef<WebSocket | null>(null);
   const [isConnected, setIsConnected] = useState(false);
-  const [members, setMembers] = useState([]);
+  const [members, setMembers] = useState<string[]>([]);
   const [chatRows, setChatRows] = useState<React.ReactNode[]>([]);
 
-  const onSocketOpen = () => {
+  const onSocketOpen = useCallback(() => {
     setIsConnected(true);
     const name = prompt('Enter your name');
     socket.current?.send(JSON.stringify({ action: 'setName', name }));
-  };
+  }, []);
 
-  const onSocketClose = () => {
+  const onSocketClose = useCallback(() => {
     setMembers([]);
     setIsConnected(false);
     setChatRows([]);
-  };
+  }, []);
 
-  const onSocketMessage = (dataStr: string) => {
-    const data = JSON.parse(dataStr);
-    if (data.members) {
-      setMembers(data.members);
-    } else if (data.publicMessage) {
-      setChatRows(old => [...old, <span><b>{data.publicMessage}</b></span>]);
-    } else if (data.privateMessage) {
-      alert(data.privateMessage);
-    } else if (data.systemMessage) {
-      setChatRows(old => [...old, <span><i>{data.systemMessage}</i></span>]);
+  const onSocketMessage = useCallback((dataStr: string) => {
+    try {
+      const data = JSON.parse(dataStr);
+
+      if (data.members) {
+        // ✅ Members are now [{ name, id }]
+        const names = data.members.map((member: any) => member.name);
+        setMembers(names);
+      } else if (data.publicMessage) {
+        setChatRows(old => [...old, <span><b>{data.publicMessage}</b></span>]);
+      } else if (data.privateMessage) {
+        alert(data.privateMessage);
+      } else if (data.systemMessage) {
+        setChatRows(old => [...old, <span><i>{data.systemMessage}</i></span>]);
+      }
+    } catch (e) {
+      console.error('Error parsing message:', e);
     }
-  };
+  }, []);
 
-  const onConnect = () => {
+  const onConnect = useCallback(() => {
     if (socket.current?.readyState !== WebSocket.OPEN) {
       socket.current = new WebSocket(URL);
       socket.current.addEventListener('open', onSocketOpen);
@@ -43,33 +50,40 @@ const App = () => {
         onSocketMessage(event.data);
       });
     }
-  };
-
-  const onDisconnect = () => {
-    if (isConnected) {
-      socket.current?.close();
-    }
-  };
-
-  const onSendPublicMessage = () => {
-    const message = prompt('Enter public message');
-    if (message) {
-      socket.current?.send(JSON.stringify({ action: 'sendPublic', message }));
-    }
-  };
-
-  const onSendPrivateMessage = (to: string) => {
-    const message = prompt(`Enter private message for ${to}`);
-    if (message) {
-      socket.current?.send(JSON.stringify({ action: 'sendPrivate', message, to }));
-    }
-  };
+  }, []);
 
   useEffect(() => {
     return () => {
       socket.current?.close();
     };
   }, []);
+
+  const onSendPrivateMessage = useCallback((to: string) => {
+    const message = prompt(`Enter private message for ${to}`);
+    if (message) {
+      socket.current?.send(JSON.stringify({
+        action: 'sendPrivate',
+        message,
+        to,
+      }));
+    }
+  }, []);
+
+  const onSendPublicMessage = useCallback(() => {
+    const message = prompt('Enter public message');
+    if (message) {
+      socket.current?.send(JSON.stringify({
+        action: 'sendPublic',
+        message,
+      }));
+    }
+  }, []);
+
+  const onDisconnect = useCallback(() => {
+    if (isConnected) {
+      socket.current?.close();
+    }
+  }, [isConnected]);
 
   return (
     <ChatClient
