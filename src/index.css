@@ -1,54 +1,118 @@
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background: #f0f0f0;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+.app {
+  display: flex;
+  height: 100vh;
 }
 
-
+/* Sidebar */
 .sidebar {
-  background: #20232a; 
+  background-color: #1e1e3f;
   color: white;
-  width: 240px;
+  width: 250px;
   padding: 20px;
+  box-sizing: border-box;
+  overflow-y: auto;
 }
 
 .sidebar h2 {
-  text-align: center;
   margin-bottom: 20px;
+  font-size: 1.5rem;
 }
 
 .member {
-  background: #2d333b;
+  background: #00f7ff;
+  color: black;
   padding: 10px;
-  border-radius: 6px;
+  border-radius: 8px;
   margin-bottom: 10px;
   cursor: pointer;
 }
 
 .member:hover {
-  background: #3a414c;
+  background: #00d2d5;
 }
 
-.member.self-member {
+.self {
   background: #007bff;
+  color: white;
 }
 
+/* Chat Section */
+.chat {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  box-sizing: border-box;
+  background: white;
+}
 
+.chat-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.chat-display {
+  flex: 1;
+  background: #f9f9f9;
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin: 20px 0;
+  overflow-y: auto;
+}
+
+.chat-display span {
+  display: block;
+  margin-bottom: 8px;
+}
+
+/* Buttons */
+.buttons {
+  display: flex;
+  gap: 10px;
+}
+
+button {
+  padding: 8px 16px;
+  border: none;
+  background: #007bff;
+  color: white;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #0056b3;
+}
+
+.disconnect {
+  background: #ff4e50;
+}
+
+.disconnect:hover {
+  background: #c0392b;
+}
+
+/* Mobile Responsive */
 @media (max-width: 768px) {
+  .app {
+    flex-direction: column;
+  }
+
   .sidebar {
     width: 100%;
     display: flex;
     overflow-x: auto;
-    gap: 10px;
-    padding: 10px;
+    white-space: nowrap;
   }
 
   .sidebar h2 {
@@ -56,7 +120,22 @@ code {
   }
 
   .member {
-    margin: 0;
-    padding: 8px 12px;
+    margin-right: 10px;
+  }
+
+  .chat {
+    padding: 10px;
+  }
+
+  .chat-display {
+    margin: 10px 0;
+  }
+
+  .buttons {
+    flex-direction: column;
+  }
+
+  button {
+    width: 100%;
   }
 }
