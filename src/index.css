@@ -5,19 +5,26 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
 }
 
-/* App Container */
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+}
+
 .app-container {
   display: flex;
-  height: 100vh;
+  width: 90vw;
+  height: 90vh;
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
 }
 
-/* Sidebar */
 .sidebar {
-  background: #1e1e3f; /* 🔥 Updated Sidebar Color */
+  width: 250px;
+  background: #112d4e;
   color: white;
-  width: 220px;
   padding: 20px;
   display: flex;
   flex-direction: column;
@@ -28,52 +35,38 @@ body {
 }
 
 .member {
-  background: #00f7ff;
+  background: #00c3ff;
   color: black;
   padding: 10px 14px;
   margin-bottom: 10px;
   border-radius: 8px;
   cursor: pointer;
+  font-weight: 600;
 }
 
 .member:hover {
-  background: #00d4cc;
+  background: #00aacc;
 }
 
-/* Chat Section */
 .chat-section {
   flex: 1;
   display: flex;
   flex-direction: column;
-  background: white;
-  color: black;
   padding: 20px;
-}
-
-.header {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 10px;
-}
-
-.status-dot {
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  background: gray;
-}
-
-.status-dot.online {
-  background: #00da00;
 }
 
 .chat-display {
   flex: 1;
+  background: #f5f5f5;
+  padding: 14px;
+  margin-bottom: 12px;
   overflow-y: auto;
-  background: #f7f7f7;
   border-radius: 8px;
-  padding: 10px;
-  margin: 10px 0;
+}
+
+.chat-display span {
+  display: block;
+  margin-bottom: 8px;
 }
 
 .button-row {
@@ -82,45 +75,43 @@ body {
 }
 
 button {
-  padding: 10px 16px;
+  padding: 10px 18px;
   border: none;
-  border-radius: 8px;
-  cursor: pointer;
   background: #00a8ff;
   color: white;
+  border-radius: 6px;
+  cursor: pointer;
   font-weight: 600;
 }
 
 button:hover {
-  background: #007acc;
+  background: #007fcc;
 }
 
 .disconnect-button {
-  background: #f44336;
+  background: crimson;
 }
 
 .disconnect-button:hover {
-  background: #d32f2f;
+  background: darkred;
 }
 
-/* ✅ Responsive */
+/* Mobile Responsive */
 @media (max-width: 768px) {
   .app-container {
     flex-direction: column;
+    height: 95vh;
   }
 
   .sidebar {
+    width: 100%;
     flex-direction: row;
     overflow-x: auto;
-    width: 100%;
-    padding: 10px;
-  }
-
-  .sidebar h2 {
-    display: none;
+    padding: 12px;
   }
 
   .member {
-    margin: 0 8px;
+    margin-right: 10px;
+    margin-bottom: 0;
   }
 }
