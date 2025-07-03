@@ -1,1 +1,1 @@
-# severless-Chatting-app
+# serverless-Chatting-app
