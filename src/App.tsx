@@ -43,7 +43,7 @@ const App = () => {
 
   const onConnect = useCallback(() => {
     if (socket.current?.readyState !== WebSocket.OPEN) {
-      socket.current = new WebSocket(URL);
+      socket.current = new WebSocket(WEBSOCKET_URL);
       socket.current.addEventListener('open', onSocketOpen);
       socket.current.addEventListener('close', onSocketClose);
       socket.current.addEventListener('message', (event) => {
